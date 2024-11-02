@@ -1,0 +1,66 @@
+.add-conference-form {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 40px auto;
+}
+
+.add-conference-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #444;
+}
+
+.add-conference-form input[type="text"],
+.add-conference-form input[type="url"],
+.add-conference-form input[type="date"],
+.add-conference-form textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.add-conference-form input[type="text"]:focus,
+.add-conference-form input[type="url"]:focus,
+.add-conference-form input[type="date"]:focus,
+.add-conference-form textarea:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.add-conference-form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.add-conference-form button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 10px;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+.add-conference-form button:hover {
+    background-color: #0056b3;
+}
+
+.add-conference-form button[type="button"] {
+    background-color: #dc3545;
+}
+
+.add-conference-form button[type="button"]:hover {
+    background-color: #c82333;
+}

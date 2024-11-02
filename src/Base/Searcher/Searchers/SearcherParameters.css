@@ -1,0 +1,23 @@
+.price-range,
+.date-range {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.price-range div,
+.date-range div {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.price-range div:last-child,
+.date-range div:last-child {
+    margin-right: 0;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
