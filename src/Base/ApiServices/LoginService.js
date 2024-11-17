@@ -1,10 +1,11 @@
 import axios from 'axios';
+const serverUrl = 'http://3.66.111.69:3000/';
 
 const loginUserAsync = async (login, password) => {
     try {
         const authHeader = `Basic ${btoa(`${login}:${password}`)}`;
         const response = await axios.post(
-            'http://3.66.111.69:3000/login',
+            serverUrl+'login',
             {},
             {
                 headers: {

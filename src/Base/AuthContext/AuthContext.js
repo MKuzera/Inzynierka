@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
                 isLogged: true,
                 login,
                 token: userData.token,
-                userID: userData.userID || 'defaultID',
+                userID: userData.userId || 'defaultID',
                 userType: userData.userType || 'defaultType',
             });
         } catch (error) {

@@ -1,33 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './MyWork.css';
+import { GetDocumentsByAuthorID } from '../ApiServices/DocumentService';
+import { useAuth } from '../AuthContext/AuthContext';
 
 const MyWork = ({ setActivePage }) => {
-    const works = [
-        {
-            title: "Praca Naukowa 1",
-            author: "Jan Kowalski",
-            authorId: "12345",
-            description: "Opis pracy naukowej 1.",
-            tags: ["biologia", "chemia"],
-            dateAdded: "2024-10-01"
-        },
-        {
-            title: "Praca Naukowa 2",
-            author: "Anna Nowak",
-            authorId: "67890",
-            description: "Opis pracy naukowej 2.",
-            tags: ["fizyka", "astronomia"],
-            dateAdded: "2024-09-25"
-        },
-        {
-            title: "Praca Naukowa 3",
-            author: "Piotr Zieliński",
-            authorId: "54321",
-            description: "Opis pracy naukowej 3.",
-            tags: ["matematyka", "informatyka"],
-            dateAdded: "2024-10-15"
+    const { authState } = useAuth();
+    const [documents, setDocuments] = useState([]);
+
+    useEffect(() => {
+        if (authState.userID) {
+            GetDocumentsByAuthorID(authState.userID, authState.token)
+                .then((data) => {
+                    const formattedData = data.map(doc => ({
+                        ...doc,
+                        tags: doc.tags.split(',').map(tag => tag.trim()),
+                        dateAdded: new Date(doc.dateAdded).toLocaleDateString(),
+                    }));
+                    setDocuments(formattedData);
+                })
+                .catch((error) => {
+                    console.error('Błąd podczas pobierania dokumentów:', error);
+                });
         }
-    ];
+    }, [authState.userID]);
 
     return (
         <div className="my-work-container">
@@ -36,8 +31,8 @@ const MyWork = ({ setActivePage }) => {
                 Dodaj Pracę
             </button>
             <ul>
-                {works.map((work, index) => (
-                    <li key={index} className="work-item">
+                {documents.map((work) => (
+                    <li key={work.id} className="work-item">
                         <h3>{work.title}</h3>
                         <p><strong>Autor:</strong> {work.author} (ID: {work.authorId})</p>
                         <p><strong>Opis:</strong> {work.description}</p>

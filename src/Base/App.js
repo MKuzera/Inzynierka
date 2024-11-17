@@ -18,6 +18,7 @@ function App() {
                     <div>
                         <h2>Witaj, {authState.login}!</h2>
                         <p>Twoje hasło to: {authState.token}</p>
+                        <p>Twoje hx to: {authState.userID}</p>
                     </div>
                 ) : (
                     <h2>Witaj na głównej stronie! Proszę się zalogować.</h2>
