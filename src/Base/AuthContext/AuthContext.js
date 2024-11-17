@@ -1,16 +1,36 @@
 import React, { createContext, useContext, useState } from 'react';
+import { loginUserAsync } from '../ApiServices/LoginService';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [authState, setAuthState] = useState({ isLogged: false, login: '', password: '', userID: 'defaultID', userType: 'defaultType' });
+    const [authState, setAuthState] = useState({
+        isLogged: false,
+        login: '',
+        token: '',
+        userID: 'defaultID',
+        userType: 'defaultType',
+    });
 
-    const loginUser = (login, password) => {
-        setAuthState({ isLogged: true, login, password, userID: '100', userType: 'Organizer' });
+    const loginUser = async (login, password) => {
+        try {
+            const userData = await loginUserAsync(login, password);
+            setAuthState({
+                isLogged: true,
+                login,
+                token: userData.token,
+                userID: userData.userID || 'defaultID',
+                userType: userData.userType || 'defaultType',
+            });
+        } catch (error) {
+            console.error('Login failed:', error);
+            setAuthState({ isLogged: false, login: '', token: '', userID: '', userType: '' });
+            throw error;
+        }
     };
 
     const logoutUser = () => {
-        setAuthState({ isLogged: false, login: '', password: '', userID: '', userType: '' });
+        setAuthState({ isLogged: false, login: '', token: '', userID: '', userType: '' });
     };
 
     return (

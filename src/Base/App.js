@@ -17,7 +17,7 @@ function App() {
                 return authState.isLogged ? (
                     <div>
                         <h2>Witaj, {authState.login}!</h2>
-                        <p>Twoje hasło to: {authState.password}</p>
+                        <p>Twoje hasło to: {authState.token}</p>
                     </div>
                 ) : (
                     <h2>Witaj na głównej stronie! Proszę się zalogować.</h2>
