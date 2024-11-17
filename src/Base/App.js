@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import './App.css';
-import Login from './Login/Login';
-import Register from './Register/Register';
-import { AuthProvider, useAuth } from './AuthContext/AuthContext';
-import MyWork from './MyWork/MyWork';
-import AddWorkForm from './MyWork/AddWorkForm/AddWorkForm';
-import Conferences from './Konferences/Conferences';
-import Searcher from './Searcher/Searcher'; // Import the Searcher component
+import Login from './Login/Login.js';
+import Register from './Register/Register.js';
+import { AuthProvider, useAuth } from './AuthContext/AuthContext.js';
+import MyWork from './MyWork/MyWork.js';
+import AddWorkForm from './MyWork/AddWorkForm/AddWorkForm.js';
+import Conferences from './Konferences/Conferences.js';
+import Searcher from './Searcher/Searcher.js'; // Import the Searcher component
 
 function App() {
     const [activePage, setActivePage] = useState('start');

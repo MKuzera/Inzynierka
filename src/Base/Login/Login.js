@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Login.css';
-import { useAuth } from '../AuthContext/AuthContext';
+import { useAuth  } from '../AuthContext/AuthContext.js';
+import { LoginService } from '../Api/LoginService.js';
 
 const Login = ({ setActivePage }) => {
     const { loginUser } = useAuth();
@@ -9,7 +10,18 @@ const Login = ({ setActivePage }) => {
 
     const handleLogin = (e) => {
         e.preventDefault();
-        loginUser(login, password);
+
+        const loginServiceInstance = new LoginService('');
+        loginServiceInstance.loginUser(login, password)
+            .then((data) => {
+                loginUser(login, password);
+                console.log('Login successful:', data);
+                setActivePage('start');
+            })
+            .catch((error) => {
+                console.error('Failed to log in:', error);
+            });
+
         console.log(`Login: ${login}, Password: ${password}`);
         setActivePage('start');
     };

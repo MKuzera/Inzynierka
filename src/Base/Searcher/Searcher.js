@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import SearcherParameters from './Searchers/SearcherParameters';
-import SearcherByWork from './Searchers/SearcherByWork';
-import SearcherResults from './Results/SearcherResults';
+import SearcherParameters from './Searchers/SearcherParameters.js';
+import SearcherByWork from './Searchers/SearcherByWork.js';
+import SearcherResults from './Results/SearcherResults.js';
 import './Searcher.css';
 
 const Searcher = () => {

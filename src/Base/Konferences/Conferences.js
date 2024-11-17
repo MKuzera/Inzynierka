@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import AddConferenceForm from './AddConferenceForm/AddConferenceForm';
+import AddConferenceForm from './AddConferenceForm/AddConferenceForm.js';
 import './Conferences.css';
 
 const Conferences = () => {
