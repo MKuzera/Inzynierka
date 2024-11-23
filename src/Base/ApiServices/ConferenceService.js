@@ -45,11 +45,11 @@ const GetConferenceByAuthorID = async (id, token) => {
 };
 
 const AddConference = async (conference, token) => {
+    console.log(conference);
     try {
         const response = await axios.post(`${serverUrl}conferences`, conference, {
             headers: {
                 Authorization: `Basic ${token}`,
-                'Content-Type': 'application/json'
             }
         });
         return response.data;

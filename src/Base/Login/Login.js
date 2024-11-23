@@ -6,12 +6,19 @@ const Login = ({ setActivePage }) => {
     const { loginUser } = useAuth();
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState(''); // State for the error message
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-        loginUser(login, password);
-        console.log(`Login: ${login}, Password: ${password}`);
-        setActivePage('start');
+        try {
+            await loginUser(login, password);
+            console.log(`Login: ${login}, Password: ${password}`);
+            setActivePage('start');
+        } catch (error) {
+            // If an error occurs (e.g., invalid login or password)
+            setErrorMessage('Nieprawidłowy login lub hasło');
+            console.error('Błąd logowania:', error);
+        }
     };
 
     return (
@@ -40,6 +47,7 @@ const Login = ({ setActivePage }) => {
                 </div>
                 <button type="submit">Zaloguj</button>
             </form>
+            {errorMessage && <p className="error-message">{errorMessage}</p>} {/* Show error message */}
             <button onClick={() => setActivePage('register')}>Zarejestruj się</button>
         </div>
     );
