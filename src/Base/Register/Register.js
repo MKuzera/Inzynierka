@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import './Register.css';
+import { RegisterUserAsync } from '../ApiServices/LoginService';
+
 const Register = () => {
     const [formData, setFormData] = useState({
-        imie: '',
-        nazwisko: '',
         email: '',
         login: '',
         haslo: '',
         powtorzHaslo: '',
-        uczelnia: '',
-        UserType: 'User'
     });
+    const [message, setMessage] = useState(null);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -20,39 +19,25 @@ const Register = () => {
         });
     };
 
-    const handleRegister = (e) => {
+    const handleRegister = async (e) => {
         e.preventDefault();
-        console.log('Form Data:', formData);
+        try {
+            const response = await RegisterUserAsync(formData.login, formData.haslo, formData.email);
+            console.log(response);
+            if (response.success) {
+                setMessage({ type: 'success', text: 'Rejestracja zakończona sukcesem!' });
+            } else {
+                setMessage({ type: 'error', text: 'Błąd rejestracji. Spróbuj ponownie.' });
+            }
+        } catch (error) {
+            setMessage({ type: 'error', text: 'Wystąpił błąd podczas rejestracji. Spróbuj ponownie.' });
+        }
     };
 
     return (
         <div className="register-container">
             <h2>Rejestracja</h2>
             <form onSubmit={handleRegister}>
-                <div className="form-group">
-                    <label htmlFor="imie">Imię</label>
-                    <input
-                        type="text"
-                        id="imie"
-                        name="imie"
-                        value={formData.imie}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="nazwisko">Nazwisko</label>
-                    <input
-                        type="text"
-                        id="nazwisko"
-                        name="nazwisko"
-                        value={formData.nazwisko}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-
                 <div className="form-group">
                     <label htmlFor="email">Email</label>
                     <input
@@ -101,20 +86,14 @@ const Register = () => {
                     />
                 </div>
 
-                <div className="form-group">
-                    <label htmlFor="uczelnia">Uczelnia</label>
-                    <input
-                        type="text"
-                        id="uczelnia"
-                        name="uczelnia"
-                        value={formData.uczelnia}
-                        onChange={handleChange}
-                    />
-                </div>
-
-
                 <button type="submit" className="register-button">Zarejestruj</button>
             </form>
+
+            {message && (
+                <div className={`message ${message.type}`}>
+                    {message.text}
+                </div>
+            )}
         </div>
     );
 };

@@ -43,6 +43,19 @@ const GetConferenceByAuthorID = async (id, token) => {
         throw error;
     }
 };
+const UpdateConference = async (conferenceData, token) => {
+    const response = await axios.put(
+        serverUrl + `conferences/${conferenceData.id}`,
+        conferenceData,
+        {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        }
+    );
+    return response.data;
+};
 
 const AddConference = async (conference, token) => {
     console.log(conference);
@@ -59,9 +72,27 @@ const AddConference = async (conference, token) => {
     }
 };
 
+const DeleteConference = async (conferenceId, token) => {
+    try {
+        const response = await axios.delete(`${serverUrl}conferences/${conferenceId}`, {
+            headers: {
+                Authorization: `Basic ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Błąd podczas usuwania konferencji:', error.message);
+        throw error;
+    }
+};
+
+
 export {
     AddConference,
     GetConference,
     GetConferences,
     GetConferenceByAuthorID,
+    UpdateConference,
+    DeleteConference
 };

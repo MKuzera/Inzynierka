@@ -8,6 +8,9 @@ import AddWorkForm from './MyWork/AddWorkForm/AddWorkForm';
 import Conferences from './Konferences/Conferences';
 import Searcher from './Searcher/Searcher';
 import AllConferences from './Konferences/DisplayAviableConferences/AllConferences';
+import ManageConferences from "./AdminManagment/ManageConferences";
+import ManageAllDocuments from "./AdminManagment/ManageAllDocuments";
+import ManageAllUsers from "./AdminManagment/ManageAllUsers";
 
 
 function App() {
@@ -31,6 +34,12 @@ function App() {
                 return <Conferences setActivePage={setActivePage} />;
             case 'konferencje':
                 return <AllConferences setActivePage={setActivePage} />;
+            case 'konferencje_zarzadzaj':
+                return <ManageConferences setActivePage={setActivePage} />;
+            case 'documents_zarzadzaj':
+                return <ManageAllDocuments setActivePage={setActivePage} />;
+            case 'users_zarzadzaj':
+                return <ManageAllUsers setActivePage={setActivePage} />;
             case 'wyszukiwarka':
                 return authState.isLogged ? <Searcher /> : <h2>Proszę się zalogować.</h2>;
             case 'dodaj-prace':
@@ -50,10 +59,10 @@ function App() {
                 return (
                     <>
                         <li onClick={() => setActivePage('start')}>Start</li>
-                        <li onClick={() => setActivePage('moje-prace')}>Moje prace</li>
-                        <li onClick={() => setActivePage('moje konferencje')}>Moje Konferencje Naukowe</li>
+                        <li onClick={() => setActivePage('documents_zarzadzaj')}>Zarządzaj pracami</li>
                         <li onClick={() => setActivePage('wyszukiwarka')}>Wyszukiwarka</li>
-                        <li onClick={() => setActivePage('konferencje')}>Konferencje Naukowe</li>
+                        <li onClick={() => setActivePage('konferencje_zarzadzaj')}>Zarządzaj konferencjami</li>
+                        <li onClick={() => setActivePage('users_zarzadzaj')}>Zarządzaj użytkownikami</li>
                     </>
                 );
             } else if (authState.userType === 'organizer') {

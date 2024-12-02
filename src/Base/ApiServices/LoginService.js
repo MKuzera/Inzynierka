@@ -22,17 +22,31 @@ const loginUserAsync = async (login, password) => {
 const RegisterUserAsync = async (login, password, email) => {
     try {
         const response = await axios.post(
-            serverUrl+'register',
-            {},
+            serverUrl + 'register',
+            {
+                login: login,
+                password: password,
+                email: email
+            },
             {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             }
         );
-        return response.data;
+
+        if (response.data.message === "Registration successful") {
+            return {
+                success: true,
+                userId: response.data.userId
+            };
+        } else {
+            return { success: false, message: "Unknown error" };
+        }
     } catch (error) {
-        throw error;
+        return { success: false, message: error.message };
     }
 };
-export { loginUserAsync };
+
+
+export { loginUserAsync, RegisterUserAsync };

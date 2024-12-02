@@ -59,9 +59,43 @@ const AddDocument = async (document, token) => {
     }
 };
 
+const UpdateDocument = async (document, token) => {
+    try {
+        const response = await axios.put(`${serverUrl}documents/${document.id}`, document, {
+            headers: {
+                Authorization: `Basic ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Błąd podczas aktualizacji dokumentu:', error.message);
+        throw error;
+    }
+};
+export const DeleteDocument = async (documentId, token) => {
+    try {
+        const response = await axios.delete(`${serverUrl}documents/${documentId}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        });
+        if (!response.ok) {
+            throw new Error('Failed to delete document');
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Błąd podczas usuwania dokumentu:', error);
+        throw error;
+    }
+};
+
+
 export {
     GetDocument,
     GetDocuments,
     GetDocumentsByAuthorID,
-    AddDocument
+    AddDocument,
+    UpdateDocument
 };
