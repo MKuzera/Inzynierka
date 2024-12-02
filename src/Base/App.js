@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import Login from './Login/Login';
 import Register from './Register/Register';
@@ -8,7 +8,8 @@ import AddWorkForm from './MyWork/AddWorkForm/AddWorkForm';
 import Conferences from './Konferences/Conferences';
 import Searcher from './Searcher/Searcher';
 import AllConferences from './Konferences/DisplayAviableConferences/AllConferences';
-
+import ChatGptComponent from "./ChatGptService/ChatGptComponent";
+import {CallChatGptAsync} from "./ChatGptService/ChatGpt";
 
 function App() {
     const [activePage, setActivePage] = useState('start');
@@ -44,7 +45,6 @@ function App() {
         }
     };
 
-    // Render navbar based on user type
     const renderNav = (authState, logoutUser) => {
         if (authState.isLogged) {
             if (authState.userType === 'admin') {
@@ -66,7 +66,7 @@ function App() {
                         <li onClick={() => { logoutUser(); setActivePage('start'); }}>Wyloguj</li>
                     </>
                 );
-            } else if (authState.userType === 'user') {
+            } else if (authState.userType === 'user' || authState.userType === 'defaultType') {
                 return (
                     <>
                         <li onClick={() => setActivePage('start')}>Start</li>
@@ -97,6 +97,8 @@ function App() {
 
                         <main>
                             {renderContent(authState)}
+                            {<ChatGptComponent/>}
+
                         </main>
 
                         <footer className="footer">
@@ -111,6 +113,7 @@ function App() {
 
 const AuthConsumer = ({ children }) => {
     const auth = useAuth();
+    console.log(auth);
     return children(auth);
 };
 
