@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {CallChatGptAsync2 }from './ChatGpt';
+import {CallChatGptAsync }from './ChatGpt';
 
 
 const ChatGptComponent = () => {
@@ -10,7 +10,7 @@ const ChatGptComponent = () => {
 
     const chatgpt = async  () => {
         try {
-            const response = await CallChatGptAsync2(input);
+            const response = await CallChatGptAsync(input);
             setOutput(response || 'No response received');
         } catch (err) {
             setError('Failed to fetch response from ChatGPT');

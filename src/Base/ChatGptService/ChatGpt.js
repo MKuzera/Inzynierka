@@ -1,6 +1,6 @@
 import { OpenAI } from "openai";
 import message from './key.json';
-const CallChatGptAsync2 = async (prompt) => {
+const CallChatGptAsync = async (prompt) => {
     const token = message.key;
 
     const client = new OpenAI({
@@ -17,4 +17,4 @@ const CallChatGptAsync2 = async (prompt) => {
     return response.choices[0].message.content;
 };
 
-export { CallChatGptAsync2 };
+export { CallChatGptAsync };

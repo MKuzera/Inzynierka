@@ -8,8 +8,7 @@ import AddWorkForm from './MyWork/AddWorkForm/AddWorkForm';
 import Conferences from './Konferences/Conferences';
 import Searcher from './Searcher/Searcher';
 import AllConferences from './Konferences/DisplayAviableConferences/AllConferences';
-import ChatGptComponent from "./ChatGptService/ChatGptComponent";
-import {CallChatGptAsync} from "./ChatGptService/ChatGpt";
+
 
 function App() {
     const [activePage, setActivePage] = useState('start');
@@ -97,13 +96,11 @@ function App() {
 
                         <main>
                             {renderContent(authState)}
-                            {<ChatGptComponent/>}
+
 
                         </main>
 
-                        <footer className="footer">
-                            <p>Informacje o stronie | Kontakt | Regulamin</p>
-                        </footer>
+
                     </div>
                 )}
             </AuthConsumer>

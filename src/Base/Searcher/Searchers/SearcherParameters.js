@@ -1,4 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useAuth } from '../../AuthContext/AuthContext';
+import { CallChatGptAsync } from '../../ChatGptService/ChatGpt';
+import { GetConferences } from '../../ApiServices/ConferenceService';
+import ConferenceList from "./ConferenceList";
 
 const SearcherParameters = () => {
     const [shortDescription, setShortDescription] = useState('');
@@ -7,13 +11,72 @@ const SearcherParameters = () => {
     const [maxPrice, setMaxPrice] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
+    const { authState } = useAuth();
+    const [output, setOutput] = useState('');
+    const [outputArray, setOutputArray] = useState([]);
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    const handleSearch = (e) => {
+    useEffect(() => {
+        if (output) {
+            try {
+                const parsedData = JSON.parse(output);
+                setOutputArray(parsedData);
+            } catch (error) {
+                console.error("Błąd podczas parsowania JSON:", error);
+            }
+        }
+    }, [output]);
+
+    const handleSearch = async (e) => {
         e.preventDefault();
+
         console.log("Opis krótki:", shortDescription);
         console.log("Tagi:", tags);
         console.log("Zakres cenowy:", { minPrice, maxPrice });
         console.log("Zakres dat:", { startDate, endDate });
+
+        try {
+            const conferences = await GetConferences(authState.token);
+
+            const formattedConferences = conferences.map((conference) => ({
+                ...conference,
+                tags: conference.tags,
+                date: new Date(conference.date).toLocaleDateString(),
+            }));
+
+            const prompt = `
+            Wyszukaj mi najbardziej dopasowane  konferecje (maksymalnie 5, bez powtarzania) do podanych parametrów
+            Parametry:
+            Opis krótki: ${shortDescription}
+            Tagi: ${tags} 
+            Zakres cenowy: ${minPrice} - ${maxPrice}
+            Zakres dat: ${startDate} - ${endDate}
+
+           
+            Spośród tych:
+            ${formattedConferences.map(conference => `
+            Tytuł: ${conference.title}
+            Data: ${conference.date}
+            Opis: ${conference.description}
+            Organizatorzy: ${conference.organizers}
+            Miejsce: ${conference.location}
+            Tagi: ${conference.tags}
+            link: ${conference.link}
+            Cena: ${conference.price}`).join("\n")}
+            ZWRÓC TYLKO WYNIKI W FORMACIE JSON bez {"conferences":} [{},{}], title, date, description, tags(jako string z przecinkami), price, link, organizers, location
+            `;
+
+            setLoading(true);
+            const response = await CallChatGptAsync(prompt);
+
+            setOutput(response || "Brak odpowiedzi");
+
+        } catch (err) {
+            setError('Wystąpił błąd podczas wyszukiwania konferencji');
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -72,6 +135,15 @@ const SearcherParameters = () => {
                 </div>
             </div>
             <button onClick={handleSearch}>Szukaj</button>
+
+            {loading && <p>Ładowanie...</p>}
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+
+            {outputArray && Array.isArray(outputArray) && outputArray.length > 0 ? (
+                <ConferenceList conferencesData={outputArray} />
+            ) : (
+                output && <p>{output}</p>
+            )}
         </div>
     );
 };
