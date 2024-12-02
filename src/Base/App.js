@@ -3,7 +3,7 @@ import './App.css';
 import Login from './Login/Login';
 import Register from './Register/Register';
 import { AuthProvider, useAuth } from './AuthContext/AuthContext';
-import MyWork from './MyWork/MyWork';
+import MyWork from './MyWork/MyDocuments';
 import AddWorkForm from './MyWork/AddWorkForm/AddWorkForm';
 import Conferences from './Konferences/Conferences';
 import Searcher from './Searcher/Searcher';
@@ -11,6 +11,7 @@ import AllConferences from './Konferences/DisplayAviableConferences/AllConferenc
 import ManageConferences from "./AdminManagment/ManageConferences";
 import ManageAllDocuments from "./AdminManagment/ManageAllDocuments";
 import ManageAllUsers from "./AdminManagment/ManageAllUsers";
+import AddConferenceForm from "./Konferences/AddConferenceForm/AddConferenceForm";
 
 
 function App() {
@@ -44,6 +45,8 @@ function App() {
                 return authState.isLogged ? <Searcher /> : <h2>Proszę się zalogować.</h2>;
             case 'dodaj-prace':
                 return <AddWorkForm setActivePage={setActivePage} />;
+            case 'add-conference':
+                return <AddConferenceForm setActivePage={setActivePage} />;
             case 'zaloguj':
                 return <Login setActivePage={setActivePage} />;
             case 'register':
@@ -65,7 +68,7 @@ function App() {
                         <li onClick={() => setActivePage('users_zarzadzaj')}>Zarządzaj użytkownikami</li>
                     </>
                 );
-            } else if (authState.userType === 'organizer') {
+            } else if (authState.userType === 'creator') {
                 return (
                     <>
                         <li onClick={() => setActivePage('start')}>Start</li>
