@@ -66,6 +66,7 @@ function App() {
                         <li onClick={() => setActivePage('wyszukiwarka')}>Wyszukiwarka</li>
                         <li onClick={() => setActivePage('konferencje_zarzadzaj')}>Zarządzaj konferencjami</li>
                         <li onClick={() => setActivePage('users_zarzadzaj')}>Zarządzaj użytkownikami</li>
+                        <li onClick={() => { logoutUser(); setActivePage('start'); }}>Wyloguj</li>
                     </>
                 );
             } else if (authState.userType === 'creator') {
