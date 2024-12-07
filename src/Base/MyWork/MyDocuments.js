@@ -127,8 +127,47 @@ const ManageAllDocuments = ({ setActivePage }) => {
                                         onChange={handleInputChange}
                                     />
                                 </div>
-                                <button type="button" onClick={() => handleDownload(doc.link)} className="download-button">
-                                    Pobierz plik
+                                <div>
+                                    <label htmlFor="author">Autor:</label>
+                                    <input
+                                        type="text"
+                                        id="author"
+                                        name="author"
+                                        value={editingDocument.author}
+                                        onChange={handleInputChange}
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="description">Opis:</label>
+                                    <textarea
+                                        id="description"
+                                        name="description"
+                                        value={editingDocument.description}
+                                        onChange={handleInputChange}
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="tags">Tagi:</label>
+                                    <input
+                                        type="text"
+                                        id="tags"
+                                        name="tags"
+                                        value={editingDocument.tags.join(', ')}
+                                        onChange={handleInputChange}
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="dateAdded">Data dodania:</label>
+                                    <input
+                                        type="date"
+                                        id="dateAdded"
+                                        name="dateAdded"
+                                        value={editingDocument.dateAdded}
+                                        onChange={handleInputChange}
+                                    />
+                                </div>
+                                <button type="button" onClick={handleSaveChanges}>
+                                    Zapisz zmiany
                                 </button>
                             </div>
                         ) : (
@@ -138,9 +177,16 @@ const ManageAllDocuments = ({ setActivePage }) => {
                                 <p><strong>Opis:</strong> {doc.description}</p>
                                 <p><strong>Tagi:</strong> {doc.tags.join(', ')}</p>
                                 <p><strong>Data dodania:</strong> {doc.dateAdded}</p>
-                                <button type="button" onClick={() => handleDownload(doc.link)} className="download-button">
-                                    Pobierz plik
-                                </button>
+                                {/* Warunek, aby ukryć przycisk po wejściu w tryb edycji */}
+                                {!editingDocument || editingDocument.id !== doc.id ? (
+                                    <button
+                                        type="button"
+                                        onClick={() => handleDownload(doc.link)}
+                                        className="download-button"
+                                    >
+                                        Pobierz plik
+                                    </button>
+                                ) : null}
                                 <button type="button" onClick={() => handleEditClick(doc)}>
                                     Edytuj
                                 </button>
