@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
-import { useAuth } from '../../AuthContext/AuthContext';
+import { UploadDocument } from '../../ApiServices/FileService';
 import { AddDocument } from '../../ApiServices/DocumentService';
+import { useAuth } from '../../AuthContext/AuthContext';
 
 const AddWorkForm = ({ setActivePage }) => {
     const { authState } = useAuth();
     const [formData, setFormData] = useState({
         title: '',
         author: '',
-        authorId: authState.userID, // Pobierz ID autora z authState
+        authorId: authState.userID,
         description: '',
         tags: '',
-        dateAdded: new Date().toISOString().slice(0, 10), // Ustaw datę na dzisiejszą
+        dateAdded: new Date().toISOString().slice(0, 10),
         link: ''
     });
-
+    const [file, setFile] = useState(null);
     const [error, setError] = useState(null);
 
     const handleChange = (e) => {
@@ -21,16 +22,41 @@ const AddWorkForm = ({ setActivePage }) => {
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleAddWork = (e) => {
-        e.preventDefault();
-        AddDocument(formData, authState.token)
-            .then(() => {
-                setActivePage('moje-prace');
-            })
-            .catch((error) => {
-                setError('Błąd podczas dodawania dokumentu: ' + error.message);
-            });
+    const handleFileChange = (e) => {
+        const selectedFile = e.target.files[0];
+        setFile(selectedFile);
     };
+
+    const handleAddWork = async (e) => {
+        e.preventDefault();
+        try {
+            if (file) {
+                const formDataFile = new FormData();
+                formDataFile.append('file', file); // Dodanie pliku do FormData
+
+                // Debugowanie zawartości FormData
+                console.log('Plik do wysyłki:', file);
+                for (let key of formDataFile.keys()) {
+                    console.log('Key:', key, 'Value:', formDataFile.get(key));
+                }
+
+                const uploadedFilePath = await UploadDocument(formDataFile, authState.token);
+                console.log('Uploaded File Path:', uploadedFilePath);
+
+                formData.link = uploadedFilePath;
+            } else {
+                setError('No file selected');
+                return;
+            }
+
+            await AddDocument(formData, authState.token);
+            setActivePage('moje-prace');
+        } catch (error) {
+            console.error(error);
+            setError('Błąd podczas dodawania dokumentu: ' + error.message);
+        }
+    };
+
 
     return (
         <div className="add-work-form">
@@ -38,29 +64,54 @@ const AddWorkForm = ({ setActivePage }) => {
             <form onSubmit={handleAddWork}>
                 <div className="form-group">
                     <label htmlFor="title">Tytuł</label>
-                    <input type="text" id="title" name="title" value={formData.title} onChange={handleChange} required />
+                    <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        value={formData.title}
+                        onChange={handleChange}
+                        required
+                    />
                 </div>
                 <div className="form-group">
                     <label htmlFor="author">Autor</label>
-                    <input type="text" id="author" name="author" value={formData.author} onChange={handleChange} required />
-                </div>
-                <div className="form-group" style={{ display: 'none' }}>
-                    <input type="text" id="authorId" name="authorId" value={formData.authorId} readOnly />
+                    <input
+                        type="text"
+                        id="author"
+                        name="author"
+                        value={formData.author}
+                        onChange={handleChange}
+                        required
+                    />
                 </div>
                 <div className="form-group">
                     <label htmlFor="description">Opis</label>
-                    <textarea id="description" name="description" value={formData.description} onChange={handleChange} required />
+                    <textarea
+                        id="description"
+                        name="description"
+                        value={formData.description}
+                        onChange={handleChange}
+                        required
+                    />
                 </div>
                 <div className="form-group">
                     <label htmlFor="tags">Tagi (oddzielone przecinkami)</label>
-                    <input type="text" id="tags" name="tags" value={formData.tags} onChange={handleChange} />
-                </div>
-                <div className="form-group" style={{ display: 'none' }}>
-                    <input type="date" id="dateAdded" name="dateAdded" value={formData.dateAdded} readOnly />
+                    <input
+                        type="text"
+                        id="tags"
+                        name="tags"
+                        value={formData.tags}
+                        onChange={handleChange}
+                    />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="link">Link</label>
-                    <input type="text" id="link" name="link" value={formData.link} onChange={handleChange} />
+                    <label htmlFor="file">Prześlij plik</label>
+                    <input
+                        type="file"
+                        id="file"
+                        onChange={handleFileChange}
+                        required
+                    />
                 </div>
                 <button type="submit">Dodaj Pracę</button>
             </form>

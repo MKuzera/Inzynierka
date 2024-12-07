@@ -18,12 +18,14 @@ const Conferences = () => {
         if (authState.userID) {
             GetConferenceByAuthorID(authState.userID, authState.token)
                 .then((data) => {
-                    const formattedData = data.map((conference) => ({
-                        ...conference,
-                        tags: conference.tags.split(",").map((tag) => tag.trim()),
-                        date: new Date(conference.date).toISOString().split("T")[0],
-                    }));
-                    setConferences(formattedData);
+                    if (data) {
+                        const formattedData = data.map((conference) => ({
+                            ...conference,
+                            tags: conference.tags.split(",").map((tag) => tag.trim()),
+                            date: new Date(conference.date).toISOString().split("T")[0],
+                        }));
+                        setConferences(formattedData);
+                    }
                 })
                 .catch((error) => {
                     console.error("Błąd podczas pobierania konferencji:", error);
@@ -115,118 +117,122 @@ const Conferences = () => {
                         Dodaj Konferencję
                     </button>
                     <ul>
-                        {conferences.map((conference) => (
-                            <li key={conference.id} className="conference-item">
-                                {editingConference && editingConference.id === conference.id ? (
-                                    <div className="edit-form">
-                                        <h3>Edycja konferencji</h3>
-                                        <div>
-                                            <label htmlFor="title">Tytuł:</label>
-                                            <input
-                                                type="text"
-                                                id="title"
-                                                name="title"
-                                                value={editingConference.title}
-                                                onChange={handleInputChange}
-                                            />
+                        {conferences && conferences.length > 0 ? (
+                            conferences.map((conference) => (
+                                <li key={conference.id} className="conference-item">
+                                    {editingConference && editingConference.id === conference.id ? (
+                                        <div className="edit-form">
+                                            <h3>Edycja konferencji</h3>
+                                            <div>
+                                                <label htmlFor="title">Tytuł:</label>
+                                                <input
+                                                    type="text"
+                                                    id="title"
+                                                    name="title"
+                                                    value={editingConference.title}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </div>
+                                            <div>
+                                                <label htmlFor="description">Opis:</label>
+                                                <textarea
+                                                    id="description"
+                                                    name="description"
+                                                    value={editingConference.description}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </div>
+                                            <div>
+                                                <label htmlFor="location">Miejsce:</label>
+                                                <input
+                                                    type="text"
+                                                    id="location"
+                                                    name="location"
+                                                    value={editingConference.location}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </div>
+                                            <div>
+                                                <label htmlFor="organizers">Organizator:</label>
+                                                <input
+                                                    type="text"
+                                                    id="organizers"
+                                                    name="organizers"
+                                                    value={editingConference.organizers}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </div>
+                                            <div>
+                                                <label htmlFor="tags">Tagi:</label>
+                                                <input
+                                                    type="text"
+                                                    id="tags"
+                                                    name="tags"
+                                                    value={editingConference.tags.join(", ")}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </div>
+                                            <div>
+                                                <label htmlFor="price">Cena:</label>
+                                                <input
+                                                    type="number"
+                                                    id="price"
+                                                    name="price"
+                                                    value={editingConference.price}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </div>
+                                            <div>
+                                                <label htmlFor="date">Data:</label>
+                                                <input
+                                                    type="date"
+                                                    id="date"
+                                                    name="date"
+                                                    value={editingConference.date}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </div>
+                                            <div>
+                                                <label htmlFor="link">Odnośnik:</label>
+                                                <input
+                                                    type="url"
+                                                    id="link"
+                                                    name="link"
+                                                    value={editingConference.link}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </div>
+                                            <button type="button" onClick={handleSaveChanges}>
+                                                Zapisz zmiany
+                                            </button>
                                         </div>
+                                    ) : (
                                         <div>
-                                            <label htmlFor="description">Opis:</label>
-                                            <textarea
-                                                id="description"
-                                                name="description"
-                                                value={editingConference.description}
-                                                onChange={handleInputChange}
-                                            />
+                                            <h3>{conference.title}</h3>
+                                            <p><strong>Opis:</strong> {conference.description}</p>
+                                            <p><strong>Miejsce:</strong> {conference.location}</p>
+                                            <p><strong>Organizator:</strong> {conference.organizers}</p>
+                                            <p><strong>Tagi:</strong> {conference.tags.join(", ")}</p>
+                                            <p><strong>Cena:</strong> ${conference.price}</p>
+                                            <p><strong>Data:</strong> {conference.date}</p>
+                                            <p><strong>Odnośnik:</strong> <a href={conference.link} target="_blank" rel="noopener noreferrer">Zobacz więcej</a></p>
+                                            <button type="button" onClick={() => handleEditClick(conference)}>
+                                                Edytuj
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => handleDeleteConference(conference.id)}
+                                                style={{ marginLeft: '10px', backgroundColor: 'red', color: 'white' }}
+                                            >
+                                                Usuń
+                                            </button>
                                         </div>
-                                        <div>
-                                            <label htmlFor="location">Miejsce:</label>
-                                            <input
-                                                type="text"
-                                                id="location"
-                                                name="location"
-                                                value={editingConference.location}
-                                                onChange={handleInputChange}
-                                            />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="organizers">Organizator:</label>
-                                            <input
-                                                type="text"
-                                                id="organizers"
-                                                name="organizers"
-                                                value={editingConference.organizers}
-                                                onChange={handleInputChange}
-                                            />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="tags">Tagi:</label>
-                                            <input
-                                                type="text"
-                                                id="tags"
-                                                name="tags"
-                                                value={editingConference.tags.join(", ")}
-                                                onChange={handleInputChange}
-                                            />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="price">Cena:</label>
-                                            <input
-                                                type="number"
-                                                id="price"
-                                                name="price"
-                                                value={editingConference.price}
-                                                onChange={handleInputChange}
-                                            />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="date">Data:</label>
-                                            <input
-                                                type="date"
-                                                id="date"
-                                                name="date"
-                                                value={editingConference.date}
-                                                onChange={handleInputChange}
-                                            />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="link">Odnośnik:</label>
-                                            <input
-                                                type="url"
-                                                id="link"
-                                                name="link"
-                                                value={editingConference.link}
-                                                onChange={handleInputChange}
-                                            />
-                                        </div>
-                                        <button type="button" onClick={handleSaveChanges}>
-                                            Zapisz zmiany
-                                        </button>
-                                    </div>
-                                ) : (
-                                    <div>
-                                        <h3>{conference.title}</h3>
-                                        <p><strong>Opis:</strong> {conference.description}</p>
-                                        <p><strong>Miejsce:</strong> {conference.location}</p>
-                                        <p><strong>Organizator:</strong> {conference.organizers}</p>
-                                        <p><strong>Tagi:</strong> {conference.tags.join(", ")}</p>
-                                        <p><strong>Cena:</strong> ${conference.price}</p>
-                                        <p><strong>Data:</strong> {conference.date}</p>
-                                        <p><strong>Odnośnik:</strong> <a href={conference.link} target="_blank" rel="noopener noreferrer">Zobacz więcej</a></p>
-                                        <button type="button" onClick={() => handleEditClick(conference)}>
-                                            Edytuj
-                                        </button>
-                                        <button
-                                            type="button"
-                                            onClick={() => handleDeleteConference(conference.id)}
-                                            style={{ marginLeft: '10px', backgroundColor: 'red', color: 'white' }}
-                                        >
-                                            Usuń
-                                        </button>
-                                    </div>
-                                )}
-                            </li>
-                        ))}
+                                    )}
+                                </li>
+                            ))
+                        ) : (
+                            <p>Brak konferencji do wyświetlenia.</p>
+                        )}
                     </ul>
                 </>
             )}

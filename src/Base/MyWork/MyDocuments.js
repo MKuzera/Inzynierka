@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './MyDocuments.css';
 import { GetDocumentsByAuthorID, UpdateDocument, DeleteDocument } from '../ApiServices/DocumentService';
+import {DownloadDocument} from "../ApiServices/FileService";
 import { useAuth } from '../AuthContext/AuthContext';
 
 const ManageAllDocuments = ({ setActivePage }) => {
@@ -24,6 +25,7 @@ const ManageAllDocuments = ({ setActivePage }) => {
                 });
         }
     }, [authState.userID]);
+
     const handleEditClick = (document) => {
         setEditingDocument({ ...document });
     };
@@ -41,7 +43,6 @@ const ManageAllDocuments = ({ setActivePage }) => {
                 console.error('Invalid date value');
             }
         } else if (name === 'tags') {
-            // Handle tags input: split by commas and trim spaces
             const tags = value.split(',').map((tag) => tag.trim());
             setEditingDocument((prev) => ({ ...prev, [name]: tags }));
         } else {
@@ -89,10 +90,24 @@ const ManageAllDocuments = ({ setActivePage }) => {
         }
     };
 
+    const handleDownload = async (filename) => {
+        try {
+            const fileBlob = await DownloadDocument(filename, authState.token);
+
+            const url = window.URL.createObjectURL(new Blob([fileBlob]));
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            window.URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error('Błąd podczas pobierania pliku:', error.message);
+        }
+    };
 
     return (
         <div className="my-work-container">
-            <h2>Moje dokumnety </h2>
+            <h2>Moje dokumenty</h2>
             <button className="add-work-button" onClick={() => setActivePage('dodaj-prace')}>
                 Dodaj Pracę
             </button>
@@ -112,47 +127,8 @@ const ManageAllDocuments = ({ setActivePage }) => {
                                         onChange={handleInputChange}
                                     />
                                 </div>
-                                <div>
-                                    <label htmlFor="author">Autor:</label>
-                                    <input
-                                        type="text"
-                                        id="author"
-                                        name="author"
-                                        value={editingDocument.author}
-                                        onChange={handleInputChange}
-                                    />
-                                </div>
-                                <div>
-                                    <label htmlFor="description">Opis:</label>
-                                    <textarea
-                                        id="description"
-                                        name="description"
-                                        value={editingDocument.description}
-                                        onChange={handleInputChange}
-                                    />
-                                </div>
-                                <div>
-                                    <label htmlFor="tags">Tagi:</label>
-                                    <input
-                                        type="text"
-                                        id="tags"
-                                        name="tags"
-                                        value={editingDocument.tags.join(', ')}
-                                        onChange={handleInputChange}
-                                    />
-                                </div>
-                                <div>
-                                    <label htmlFor="dateAdded">Data dodania:</label>
-                                    <input
-                                        type="date"
-                                        id="dateAdded"
-                                        name="dateAdded"
-                                        value={editingDocument.dateAdded}
-                                        onChange={handleInputChange}
-                                    />
-                                </div>
-                                <button type="button" onClick={handleSaveChanges}>
-                                    Zapisz zmiany
+                                <button type="button" onClick={() => handleDownload(doc.link)} className="download-button">
+                                    Pobierz plik
                                 </button>
                             </div>
                         ) : (
@@ -162,6 +138,9 @@ const ManageAllDocuments = ({ setActivePage }) => {
                                 <p><strong>Opis:</strong> {doc.description}</p>
                                 <p><strong>Tagi:</strong> {doc.tags.join(', ')}</p>
                                 <p><strong>Data dodania:</strong> {doc.dateAdded}</p>
+                                <button type="button" onClick={() => handleDownload(doc.link)} className="download-button">
+                                    Pobierz plik
+                                </button>
                                 <button type="button" onClick={() => handleEditClick(doc)}>
                                     Edytuj
                                 </button>
