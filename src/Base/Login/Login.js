@@ -12,12 +12,9 @@ const Login = ({ setActivePage }) => {
         e.preventDefault();
         try {
             await loginUser(login, password);
-            console.log(`Login: ${login}, Password: ${password}`);
             setActivePage('start');
         } catch (error) {
-            // If an error occurs (e.g., invalid login or password)
             setErrorMessage('Nieprawidłowy login lub hasło');
-            console.error('Błąd logowania:', error);
         }
     };
 

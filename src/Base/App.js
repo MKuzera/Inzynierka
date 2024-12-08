@@ -23,8 +23,7 @@ function App() {
                 return authState.isLogged ? (
                     <div>
                         <h2>Witaj, {authState.login}!</h2>
-                        <p>Twoje hasło to: {authState.token}</p>
-                        <p>Twoje ID to: {authState.userID}</p>
+                        <p>Poruszaj się po aplikacji za pomocą paska nawigacji</p>
                     </div>
                 ) : (
                     <h2>Witaj na głównej stronie! Proszę się zalogować.</h2>

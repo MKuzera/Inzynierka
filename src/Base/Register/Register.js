@@ -23,7 +23,6 @@ const Register = () => {
         e.preventDefault();
         try {
             const response = await RegisterUserAsync(formData.login, formData.haslo, formData.email);
-            console.log(response);
             if (response.success) {
                 setMessage({ type: 'success', text: 'Rejestracja zakończona sukcesem!' });
             } else {
