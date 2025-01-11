@@ -62,7 +62,7 @@ const AllConferences = () => {
             {}
             <div className="filters-container">
                 <div className="filter-group">
-                    <label>Minimalna Cena:</label>
+                    <label>Minimalna Cena w PLN:</label>
                     <input
                         type="number"
                         value={minPrice}
@@ -71,7 +71,7 @@ const AllConferences = () => {
                     />
                 </div>
                 <div className="filter-group">
-                    <label>Maksymalna Cena:</label>
+                    <label>Maksymalna Cena w PLN:</label>
                     <input
                         type="number"
                         value={maxPrice}

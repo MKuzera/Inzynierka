@@ -120,7 +120,7 @@ const SearcherByWork = () => {
                 </div>
             ))}
             <div className="price-range">
-                <label>Zakres ceny:</label>
+                <label>Zakres ceny w PLN:</label>
                 <div className="price-range-inputs">
                     <div>
                         <label>OD:</label>

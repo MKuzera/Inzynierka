@@ -173,7 +173,7 @@ const Conferences = () => {
                                                 />
                                             </div>
                                             <div>
-                                                <label htmlFor="price">Cena:</label>
+                                                <label htmlFor="price">Cena w PLN:</label>
                                                 <input
                                                     type="number"
                                                     id="price"
