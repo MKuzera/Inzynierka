@@ -38,13 +38,11 @@ const SearcherParameters = () => {
 
         try {
             const conferences = await GetConferences(authState.token);
-
             const formattedConferences = conferences.map((conference) => ({
                 ...conference,
                 tags: conference.tags,
                 date: new Date(conference.date).toLocaleDateString(),
             }));
-
             const prompt = `
             Wyszukaj mi najbardziej dopasowane  konferecje (maksymalnie 5, bez powtarzania) do podanych parametrów
             Parametry:
@@ -53,7 +51,6 @@ const SearcherParameters = () => {
             Zakres cenowy: ${minPrice} - ${maxPrice}
             Zakres dat: ${startDate} - ${endDate}
 
-           
             Spośród tych:
             ${formattedConferences.map(conference => `
             Tytuł: ${conference.title}
@@ -64,8 +61,7 @@ const SearcherParameters = () => {
             Tagi: ${conference.tags}
             link: ${conference.link}
             Cena: ${conference.price}`).join("\n")}
-            ZWRÓC TYLKO WYNIKI W FORMACIE JSON bez {"conferences":} [{},{}], title, date, description, tags(jako string z przecinkami), price, link, organizers, location
-            `;
+            ZWRÓC TYLKO WYNIKI W FORMACIE JSON bez {"conferences":} [{},{}], title, date, description, tags(jako string z przecinkami), price, link, organizers, location `;
 
             setLoading(true);
             const response = await CallChatGptAsync(prompt);
@@ -100,7 +96,7 @@ const SearcherParameters = () => {
                     <label>OD:</label>
                     <input
                         type="number"
-                        placeholder="Minimalna cena"
+                        placeholder="Minimalna cena w PLN"
                         value={minPrice}
                         onChange={(e) => setMinPrice(e.target.value)}
                     />
@@ -109,7 +105,7 @@ const SearcherParameters = () => {
                     <label>DO:</label>
                     <input
                         type="number"
-                        placeholder="Maksymalna cena"
+                        placeholder="Maksymalna cena w PLN"
                         value={maxPrice}
                         onChange={(e) => setMaxPrice(e.target.value)}
                     />

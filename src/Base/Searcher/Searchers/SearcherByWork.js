@@ -52,7 +52,7 @@ const SearcherByWork = () => {
         e.preventDefault();
         if (selectedWork) {
             console.log("Wybrana praca:", selectedWork);
-            console.log("Zakres cenowy:", { minPrice, maxPrice });
+            console.log("Zakres cenowy w PLN:", { minPrice, maxPrice });
             console.log("Zakres dat:", { startDate, endDate });
         }
 
@@ -126,7 +126,7 @@ const SearcherByWork = () => {
                         <label>OD:</label>
                         <input
                             type="number"
-                            placeholder="Minimalna cena"
+                            placeholder="Minimalna cena w PLN"
                             value={minPrice}
                             onChange={(e) => setMinPrice(e.target.value)}
                         />
@@ -135,7 +135,7 @@ const SearcherByWork = () => {
                         <label>DO:</label>
                         <input
                             type="number"
-                            placeholder="Maksymalna cena"
+                            placeholder="Maksymalna cena w PLN"
                             value={maxPrice}
                             onChange={(e) => setMaxPrice(e.target.value)}
                         />

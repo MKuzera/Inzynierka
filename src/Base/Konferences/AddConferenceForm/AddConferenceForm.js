@@ -72,7 +72,7 @@ const AddConferenceForm = ({ onAddConference, onCancel }) => {
                 onChange={(e) => setTags(e.target.value)}
                 required
             />
-            <label>Cena:</label>
+            <label>Cena w PLN:</label>
             <input
                 type="text"
                 value={price}
