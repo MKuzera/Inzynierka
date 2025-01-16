@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { UploadDocument } from '../../ApiServices/FileService';
 import { AddDocument } from '../../ApiServices/DocumentService';
 import { useAuth } from '../../AuthContext/AuthContext';
+import {SendNotificationIfMatch} from '../../NotificationService/NotificationService'
 
 const AddWorkForm = ({ setActivePage }) => {
     const { authState } = useAuth();
@@ -32,9 +33,8 @@ const AddWorkForm = ({ setActivePage }) => {
         try {
             if (file) {
                 const formDataFile = new FormData();
-                formDataFile.append('file', file); // Dodanie pliku do FormData
+                formDataFile.append('file', file);
 
-                // Debugowanie zawartości FormData
                 console.log('Plik do wysyłki:', file);
                 for (let key of formDataFile.keys()) {
                     console.log('Key:', key, 'Value:', formDataFile.get(key));
@@ -50,6 +50,8 @@ const AddWorkForm = ({ setActivePage }) => {
             }
 
             await AddDocument(formData, authState.token);
+
+            SendNotificationIfMatch(authState, formData);
             setActivePage('moje-prace');
         } catch (error) {
             console.error(error);
