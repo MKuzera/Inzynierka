@@ -4,12 +4,13 @@ import { useAuth } from "../../AuthContext/AuthContext";
 import { GetConferences } from "../../ApiServices/ConferenceService";
 
 const AllConferences = () => {
-    const [conferences, setConferences] = useState([]); // Wszystkie konferencje
-    const [filteredConferences, setFilteredConferences] = useState([]); // Filtrowane konferencje
+    const [conferences, setConferences] = useState([]);
+    const [filteredConferences, setFilteredConferences] = useState([]);
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
+    const [expandedConference, setExpandedConference] = useState(null);
 
     const { authState } = useAuth();
 
@@ -32,7 +33,6 @@ const AllConferences = () => {
         }
     }, [authState.userID, authState.token]);
 
-    // Funkcja filtrowania
     const filterConferences = () => {
         let filtered = conferences;
 
@@ -55,11 +55,14 @@ const AllConferences = () => {
         setFilteredConferences(filtered);
     };
 
+    const toggleConferenceDetails = (id) => {
+        setExpandedConference((prevId) => (prevId === id ? null : id));
+    };
+
     return (
         <div className="conferences-container">
             <h2>Konferencje Naukowe</h2>
 
-            {}
             <div className="filters-container">
                 <div className="filter-group">
                     <label>Minimalna Cena w PLN:</label>
@@ -100,18 +103,29 @@ const AllConferences = () => {
                 </button>
             </div>
 
-            {}
-            <ul>
+            <ul className="conferences-list">
                 {filteredConferences.map((conference) => (
                     <li key={conference.id} className="conference-item">
-                        <h3>{conference.title}</h3>
-                        <p><strong>Opis:</strong> {conference.description}</p>
-                        <p><strong>Miejsce:</strong> {conference.location}</p>
-                        <p><strong>Organizator:</strong> {conference.organizers}</p>
-                        <p><strong>Tagi:</strong> {conference.tags.join(", ")}</p>
-                        <p><strong>Cena:</strong> ${conference.price}</p>
-                        <p><strong>Data:</strong> {conference.date}</p>
-                        <p><strong>Odnośnik:</strong> <a href={conference.link} target="_blank" rel="noopener noreferrer">Zobacz więcej</a></p>
+                        <div className="conference-header">
+                            <h3>{conference.title}</h3>
+                            <button
+                                className="toggle-button"
+                                onClick={() => toggleConferenceDetails(conference.id)}
+                            >
+                                {expandedConference === conference.id ? 'Zwiń' : 'Rozwiń'}
+                            </button>
+                        </div>
+                        {expandedConference === conference.id && (
+                            <div className="conference-details">
+                                <p><strong>Opis:</strong> {conference.description}</p>
+                                <p><strong>Miejsce:</strong> {conference.location}</p>
+                                <p><strong>Organizator:</strong> {conference.organizers}</p>
+                                <p><strong>Tagi:</strong> {conference.tags.join(", ")}</p>
+                                <p><strong>Cena:</strong> {conference.price} PLN</p>
+                                <p><strong>Data:</strong> {conference.date}</p>
+                                <p><strong>Odnośnik:</strong> <a href={conference.link} target="_blank" rel="noopener noreferrer">Zobacz więcej</a></p>
+                            </div>
+                        )}
                     </li>
                 ))}
             </ul>
