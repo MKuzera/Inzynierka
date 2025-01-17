@@ -48,7 +48,7 @@ const ConferenceList = ({ conferencesData }) => {
                                 <p><strong>Miejsce:</strong> {conference.location}</p>
                                 <p><strong>Organizator:</strong> {conference.organizers}</p>
                                 <p><strong>Tagi:</strong> {conference.tags}</p>
-                                <p><strong>Cena w PLN:</strong> {conference.price}</p>
+                                <p><strong>Cena w USD:</strong> {conference.price}</p>
                                 <p><strong>Data:</strong> {conference.date}</p>
                                 <p><strong>Odnośnik:</strong> <a href={conference.link} target="_blank" rel="noopener noreferrer">Zobacz więcej</a></p>
                             </div>

@@ -90,7 +90,7 @@ const SearcherParameters = () => {
                 value={tags}
                 onChange={(e) => setTags(e.target.value)}
             />
-            <label>Zakres ceny w PLN:</label>
+            <label>Zakres ceny w USD:</label>
             <div className="price-range">
                 <div>
                     <label>OD:</label>

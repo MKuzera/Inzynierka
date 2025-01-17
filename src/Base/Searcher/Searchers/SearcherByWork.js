@@ -52,7 +52,7 @@ const SearcherByWork = () => {
         e.preventDefault();
         if (selectedWork) {
             console.log("Wybrana praca:", selectedWork);
-            console.log("Zakres cenowy w PLN:", { minPrice, maxPrice });
+            console.log("Zakres cenowy w USD:", { minPrice, maxPrice });
             console.log("Zakres dat:", { startDate, endDate });
         }
 
@@ -120,7 +120,7 @@ const SearcherByWork = () => {
                 </div>
             ))}
             <div className="price-range">
-                <label>Zakres ceny w PLN:</label>
+                <label>Zakres ceny w USD:</label>
                 <div className="price-range-inputs">
                     <div>
                         <label>OD:</label>
