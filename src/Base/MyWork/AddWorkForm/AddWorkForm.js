@@ -51,7 +51,6 @@ const AddWorkForm = ({ setActivePage }) => {
 
             await AddDocument(formData, authState.token);
 
-            SendNotificationIfMatch(authState, formData);
             setActivePage('moje-prace');
         } catch (error) {
             console.error(error);
