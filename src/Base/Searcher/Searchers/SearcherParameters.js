@@ -60,7 +60,7 @@ const SearcherParameters = () => {
             Miejsce: ${conference.location}
             Tagi: ${conference.tags}
             link: ${conference.link}
-            Cena: ${conference.price}`).join("\n")}
+            Cena USD: ${conference.price}`).join("\n")}
             ZWRÓC TYLKO WYNIKI W FORMACIE JSON bez {"conferences":} [{},{}], title, date, description, tags(jako string z przecinkami), price, link, organizers, location `;
 
             setLoading(true);
@@ -96,7 +96,7 @@ const SearcherParameters = () => {
                     <label>OD:</label>
                     <input
                         type="number"
-                        placeholder="Minimalna cena w PLN"
+                        placeholder="Minimalna cena w USD"
                         value={minPrice}
                         onChange={(e) => setMinPrice(e.target.value)}
                     />
@@ -105,7 +105,7 @@ const SearcherParameters = () => {
                     <label>DO:</label>
                     <input
                         type="number"
-                        placeholder="Maksymalna cena w PLN"
+                        placeholder="Maksymalna cena w USD"
                         value={maxPrice}
                         onChange={(e) => setMaxPrice(e.target.value)}
                     />

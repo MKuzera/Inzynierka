@@ -146,7 +146,7 @@ const ManageConferences = () => {
                                     />
                                 </div>
                                 <div>
-                                    <label htmlFor="price">Cena:</label>
+                                    <label htmlFor="price">Cena USD:</label>
                                     <input
                                         type="number"
                                         id="price"
@@ -186,7 +186,7 @@ const ManageConferences = () => {
                                 <p><strong>Miejsce:</strong> {conference.location}</p>
                                 <p><strong>Organizator:</strong> {conference.organizers}</p>
                                 <p><strong>Tagi:</strong> {conference.tags.join(", ")}</p>
-                                <p><strong>Cena PLN:</strong> {conference.price}</p>
+                                <p><strong>Cena USD:</strong> {conference.price}</p>
                                 <p><strong>Data:</strong> {conference.date}</p>
                                 <p><strong>Odnośnik:</strong> <a href={conference.link} target="_blank" rel="noopener noreferrer">Zobacz więcej</a></p>
                                 <button type="button" onClick={() => handleEditClick(conference)}>

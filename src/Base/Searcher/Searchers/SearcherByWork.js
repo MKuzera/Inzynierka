@@ -126,7 +126,7 @@ const SearcherByWork = () => {
                         <label>OD:</label>
                         <input
                             type="number"
-                            placeholder="Minimalna cena w PLN"
+                            placeholder="Minimalna cena w USD"
                             value={minPrice}
                             onChange={(e) => setMinPrice(e.target.value)}
                         />
@@ -135,7 +135,7 @@ const SearcherByWork = () => {
                         <label>DO:</label>
                         <input
                             type="number"
-                            placeholder="Maksymalna cena w PLN"
+                            placeholder="Maksymalna cena w USD"
                             value={maxPrice}
                             onChange={(e) => setMaxPrice(e.target.value)}
                         />

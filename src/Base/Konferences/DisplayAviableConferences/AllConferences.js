@@ -65,7 +65,7 @@ const AllConferences = () => {
 
             <div className="filters-container">
                 <div className="filter-group">
-                    <label>Minimalna Cena w PLN:</label>
+                    <label>Minimalna Cena w USD:</label>
                     <input
                         type="number"
                         value={minPrice}
@@ -74,7 +74,7 @@ const AllConferences = () => {
                     />
                 </div>
                 <div className="filter-group">
-                    <label>Maksymalna Cena w PLN:</label>
+                    <label>Maksymalna Cena w USD:</label>
                     <input
                         type="number"
                         value={maxPrice}
@@ -121,7 +121,7 @@ const AllConferences = () => {
                                 <p><strong>Miejsce:</strong> {conference.location}</p>
                                 <p><strong>Organizator:</strong> {conference.organizers}</p>
                                 <p><strong>Tagi:</strong> {conference.tags.join(", ")}</p>
-                                <p><strong>Cena:</strong> {conference.price} PLN</p>
+                                <p><strong>Cena:</strong> {conference.price} USD</p>
                                 <p><strong>Data:</strong> {conference.date}</p>
                                 <p><strong>Odnośnik:</strong> <a href={conference.link} target="_blank" rel="noopener noreferrer">Zobacz więcej</a></p>
                             </div>
