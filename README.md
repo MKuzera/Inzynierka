@@ -26,7 +26,6 @@
 - **User** – search for conferences and manage own papers.
 - **Organizer** – create and manage conferences.
 - **Administrator** – system-level management.
-- **(Optional)** Reviewer / Guest
 
 ---
 
@@ -48,10 +47,16 @@
 
 ## ⚙️ Backend Architecture
 
-- Modular **Node.js (Express)** backend.
-- AI integration for intelligent matching.
+- Modular **Node.js** backend.
 - **MySQL (RDS)** database hosted on AWS.
-- Optional **AWS S3** storage for files.
+
+---
+
+## 🤖 Integration with OpenAI
+
+- integrates with **OpenAI's ChatGPT 3.5 API**
+- intelligent conference recommendations
+- system leverages natural language understanding to match users with the most relevant scientific events
 
 ---
 
