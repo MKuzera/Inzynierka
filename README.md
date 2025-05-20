@@ -1,70 +1,99 @@
-# Getting Started with Create React App
+# 🎓 Conference Searcher – AI-Powered Scientific Conference Finder
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Conference Searcher** is a full-stack web application designed to help users discover scientific conferences that match their interests and research focus. Built as a diploma project, the application is fully hosted on **AWS** and integrates modern technologies to deliver intelligent and user-friendly functionality.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🌍 Project Goals
 
-### `npm start`
+- Develop a **publicly available** web application hosted on AWS.
+- Build a **Node.js backend**, **React frontend**, and use **MySQL (RDS)** as the database.
+- Enable users to **register and manage their scientific papers**.
+- Provide a platform for **organizers to publish conference events**.
+- Implement an intelligent **search engine powered by OpenAI**, offering personalized conference recommendations based on the descriptions of users’ scientific work.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🔍 Conference Search Options
 
-### `npm test`
+1. **Based on text description** provided by the user.
+2. **Based on uploaded document**, from which the system extracts keywords and topics.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## 👥 User Roles
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **User** – search for conferences and manage own papers.
+- **Organizer** – create and manage conferences.
+- **Administrator** – system-level management.
+- **(Optional)** Reviewer / Guest
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🔐 Authentication
 
-### `npm run eject`
+- User **registration and login** required.
+- Authentication is secured using **JWT tokens**.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 🧠 Key Features
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- **AI-powered recommendation system** using the **OpenAI API**.
+- **Standard search engine** with filters (tags, date, location).
+- **Conference management** dashboard for organizers.
+- **Document upload & management** panel for users.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+## ⚙️ Backend Architecture
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Modular **Node.js (Express)** backend.
+- AI integration for intelligent matching.
+- **MySQL (RDS)** database hosted on AWS.
+- Optional **AWS S3** storage for files.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+## 🛠️ Technologies Used
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+| Layer      | Technology             |
+|------------|------------------------|
+| Frontend   | React.js               |
+| Backend    | Node.js                |
+| Database   | MySQL (AWS RDS)        |
+| AI         | OpenAI API             |
+| Hosting    | AWS                    |
+| Auth       | JWT                    |
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
+## 📸 Screenshots
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Search by Description Using AI
+![Search by description](https://github.com/user-attachments/assets/bb39dcf1-2fd4-4c37-8521-7e09a5f2a30b)
 
-### Advanced Configuration
+### Search by Uploaded Document Using AI
+![Search by document](https://github.com/user-attachments/assets/7deed256-1eeb-4c96-a8b1-5803b69c2c8d)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Role Types
+![User roles](https://github.com/user-attachments/assets/bbee139f-9c56-47d2-b0a5-6fcd7448f9c3)
 
-### Deployment
+### Backend Architecture
+![Backend architecture](https://github.com/user-attachments/assets/0bd4d0c7-7fd9-4110-b9d6-3bc467f3408e)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### Login 
+![Auth](https://github.com/user-attachments/assets/06145145-820c-4b9d-b644-56286404a213)
 
-### `npm run build` fails to minify
+### Filters Panel
+![Search filters](https://github.com/user-attachments/assets/141c1216-a9e8-4f13-b1f0-5e82b5e64e8c)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Organizer Panel
+![Organizer panel](https://github.com/user-attachments/assets/1e7c6914-7248-4070-955c-21a7ad68b2f4)
+
+### User Document Panel
+![Documents](https://github.com/user-attachments/assets/d5e5bae1-aa12-4ae1-a932-3ba9c6233dc7)
+
+---
+
